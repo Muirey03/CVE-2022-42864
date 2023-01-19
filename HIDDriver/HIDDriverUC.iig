@@ -1,0 +1,31 @@
+/*
+See LICENSE folder for this sample’s licensing information.
+
+Abstract:
+The IOKit Interface Generator file that declares the driver's methods.
+*/
+
+#ifndef HIDDriverUC_h
+#define HIDDriverUC_h
+
+#include <Availability.h>
+#include <DriverKit/IOService.iig>
+#include <DriverKit/IOUserClient.iig>
+
+class HIDDriverUC : public IOUserClient
+{
+public:
+	virtual bool init(void) override;
+	virtual kern_return_t Start(IOService* provider) override;
+	virtual kern_return_t Stop(IOService* provider) override;
+	virtual void free(void) override;
+
+	virtual kern_return_t ExternalMethod(uint64_t selector, IOUserClientMethodArguments *arguments, const IOUserClientMethodDispatch *dispatch, OSObject *target, void *reference) override;
+	virtual kern_return_t CopyClientMemoryForType(uint64_t type, uint64_t *options, IOMemoryDescriptor **memory) override;
+
+protected:
+	kern_return_t GetValues(IOUserClientMethodArguments* args) LOCALONLY;
+	kern_return_t SetValues(IOUserClientMethodArguments* args) LOCALONLY;
+};
+
+#endif /* HIDDriverUC_h */

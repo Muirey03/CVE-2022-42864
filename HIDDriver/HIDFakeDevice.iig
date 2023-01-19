@@ -1,0 +1,30 @@
+//
+//  HIDFakeDevice.iig
+//  HIDDriver
+//
+//  Created by Tommy Muir on 20/08/2022.
+//  Copyright © 2022 Apple. All rights reserved.
+//
+
+#ifndef HIDFakeDevice_h
+#define HIDFakeDevice_h
+
+#include <Availability.h>
+#include <DriverKit/IOService.iig>
+#include <HIDDriverKit/IOUserHIDDevice.iig>
+
+class HIDFakeDevice : public IOUserHIDDevice
+{
+public:
+	virtual bool init(void) override;
+	virtual bool handleStart(IOService* provider) override;
+	virtual kern_return_t Stop(IOService* provider) override;
+	virtual void free(void) override;
+	virtual OSDictionary* newDeviceDescription(void) override;
+	virtual OSData* newReportDescriptor(void) override;
+
+	virtual kern_return_t getReport(IOMemoryDescriptor *report, IOHIDReportType reportType, IOOptionBits options, uint32_t completionTimeout, OSAction *action) override;
+	virtual kern_return_t setReport(IOMemoryDescriptor *report, IOHIDReportType reportType, IOOptionBits options, uint32_t completionTimeout, OSAction *action) override;
+};
+
+#endif /* HIDFakeDevice_h */

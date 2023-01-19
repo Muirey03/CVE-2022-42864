@@ -1,0 +1,30 @@
+/*
+See LICENSE folder for this sample’s licensing information.
+
+Abstract:
+The IOKit Interface Generator file that declares the driver's methods.
+*/
+
+#ifndef HIDDriver_h
+#define HIDDriver_h
+
+#include <Availability.h>
+#include <DriverKit/IOService.iig>
+#include <DriverKit/IOUserClient.iig>
+#include <HIDDriverKit/IOHIDInterface.iig>
+#include <HIDDriverKit/IOHIDEventService.iig>
+
+class HIDDriver : public IOHIDEventService
+{
+public:
+	virtual bool init(void) override;
+	virtual kern_return_t Start(IOService* provider) override;
+	virtual kern_return_t Stop(IOService* provider) override;
+	virtual void free(void) override;
+
+	virtual kern_return_t NewUserClient(uint32_t type, IOUserClient** userClient) override;
+
+	IOHIDInterface* GetInterface() LOCALONLY;			  
+};
+
+#endif /* HIDDriver_h */
